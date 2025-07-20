@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test ('Browser Context Playwright test', async ({browser})=>{
+test.only('Browser Context Playwright test', async ({browser})=>{
 
     //chrome - plugins/ co okies
     const context = await browser.newContext();
@@ -8,10 +8,14 @@ test ('Browser Context Playwright test', async ({browser})=>{
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
     console.log(await page.title()); 
 
+    await page.locator('#username').fill('learning');
+    await page.locator("[type='password']").fill('123');
+    await page.locator("#signInBtn").click();
+
 
 });
 
-test.only('Page Playwright test', async ({page})=>{
+test('Page Playwright test', async ({page})=>{
 
     await page.goto('https://google.com');
 
