@@ -16,6 +16,28 @@ test.only('Browser Context Playwright test', async ({browser})=>{
     console.log(await page.locator("[style*='block']").textContent());
     await expect(page.locator("[style*='block']")).toContainText('Incorrect username/password.');
 
+    //valid Credentials Sign In Scenario
+    
+    const username = page.locator('#username');
+    const password = page.locator("[type='password']");
+    const signINButton = page.locator("#signInBtn");
+
+    await username.fill("");
+    await username.fill("rahulshettyacademy");
+
+    await password.fill("");
+    await password.fill("learning");
+
+    await signINButton.click();
+
+    await page.waitForTimeout(10000)
+
+    //Grab the Phone names(grab the elements when there are more than one element)
+
+    console.log(await page.locator(".card-body a").nth("1").textContent()); 
+
+    console.log(await page.locator(".card-body a").first().textContent());
+
 
 });
 
