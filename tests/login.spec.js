@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.only('Browser Context Playwright test', async ({browser})=>{
+test('Browser Context Playwright test', async ({browser})=>{
 
     //chrome - plugins/ co okies
     const context = await browser.newContext();
@@ -38,6 +38,10 @@ test.only('Browser Context Playwright test', async ({browser})=>{
 
     console.log(await page.locator(".card-body a").first().textContent());
 
+    const cardTitle = await page.locator(".card-body a");
+    const allContent = await cardTitle.allTextContents();
+    console.log(await allContent);
+
 
 });
 
@@ -50,3 +54,25 @@ test('Page Playwright test', async ({page})=>{
     await expect(page).toHaveTitle('Google'); 
 
 });
+
+test.only('Assignment 1 Login', async ({browser})=>{
+    const context = await browser.newContext();
+    const page = await context.newPage();    
+    await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
+
+    const username = page.locator('#userEmail');
+    const password = page.locator("[type='password']");  
+    const logIn = page.locator("#login");
+
+    await username.fill("navindumalith0@gmail.com");
+    await password.fill("Mn20010810@#");
+    await logIn.click();
+
+    await page.waitForTimeout(10000);
+
+    const cardTitle = await page.locator(".card-body b");
+
+    console.log(await cardTitle.first().textContent());
+    console.log(await cardTitle.nth(1).textContent());
+    console.log(await cardTitle.last().textContent());
+}) 
