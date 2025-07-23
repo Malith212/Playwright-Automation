@@ -55,7 +55,7 @@ test('Page Playwright test', async ({page})=>{
 
 });
 
-test.only('Assignment 1 Login', async ({browser})=>{
+test('Assignment 1 Login', async ({browser})=>{
     const context = await browser.newContext();
     const page = await context.newPage();    
     await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
@@ -76,3 +76,79 @@ test.only('Assignment 1 Login', async ({browser})=>{
     console.log(await cardTitle.nth(1).textContent());
     console.log(await cardTitle.last().textContent());
 }) 
+
+test('UI basics/Select Drop Down', async ({page})=>{
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');   
+
+    const userName = await page.locator('#username');
+    const Password = await page.locator("[type='password']");
+    const SignInButton = await page.locator("#signInBtn");
+
+    await userName.fill("rahulshettyacademy");
+    await Password.fill("learning");
+    
+    const dropdown = await page.locator("select.form-control");
+    await dropdown.selectOption("consult");
+
+    //Capturing radio Icon
+
+    const radioIcon = await page.locator(".radiotextsty").nth(1);
+    await radioIcon.click();
+
+    const okButton = await page.locator('//*[@id="okayBtn"]');
+    await okButton.click();
+
+
+    //assertion whether the radio button is selected or not
+    await expect(radioIcon).toBeChecked();
+    console.log(await radioIcon.isChecked());
+
+    const termsAndConditions_checkbox = await page.locator("#terms");
+
+    await termsAndConditions_checkbox.click();
+    //assertion whether the radio button is selected or not
+
+    await expect(termsAndConditions_checkbox).toBeChecked();
+    await termsAndConditions_checkbox.uncheck();
+    console.log(await termsAndConditions_checkbox.isChecked());
+
+    expect (await termsAndConditions_checkbox).not.toBeChecked();
+    expect (await termsAndConditions_checkbox.isChecked()).toBeFalsy();
+
+    //assertion whther the attribute have the css class
+
+    const documentLink = page.locator("[href*='documents-request']");
+    await expect(documentLink).toHaveClass('blinkingText');
+    await expect(documentLink).toHaveAttribute('class', 'blinkingText');
+
+
+    // await page.pause();
+});
+
+//opening a new tab window and printing a text on that page
+
+test.only('opeining a new tab', async ({browser})=>{
+    const context=await browser.newContext();
+    const page=await context.newPage();
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+
+    const documentLink = page.locator('[href*="documents-request"]');
+
+    //we are using promise.all for when we need to execute concurrent iteam parallely
+    const [newPage] = await Promise.all([
+        context.waitForEvent('page'),
+        documentLink.click()
+    ])
+
+    const textArea = await newPage.locator('.red').textContent();
+    await console.log(textArea);
+
+    const arrayText=await textArea.split("@");
+    const userName= await arrayText[1].split(" ")[0];
+
+    await console.log(userName);
+
+    await page.locator("#username").fill(userName);
+
+
+});
