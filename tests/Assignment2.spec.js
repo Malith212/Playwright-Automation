@@ -17,7 +17,7 @@ test.only("Assignment 2", async ({page})=>{
 
     //2)Use an Iteration and found the exact product that match and click add to cart Button
 
-    const productCart = await page.locator(".card-body");
+    const productCart = page.locator(".card-body");
     const productName = "ADIDAS ORIGINAL";
 
     await page.waitForSelector(".card-body");
