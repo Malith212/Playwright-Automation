@@ -1,95 +1,93 @@
-const {test, expect} = require('@playwright/test'); 
-const { time } = require('console');
+const { test, expect } = require("@playwright/test");
+const path = require("path");
 
-test.only("Assignment 2", async ({page})=>{
+test.only("Assignment 2 Login", async ({ browser }) => {
+  const contet = await browser.newContext();
+  const page = await contet.newPage();
+  await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
 
-    await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
+  const username = page.locator("#userEmail");
+  const password = page.locator("[type='password']");
+  const logIn = page.locator("#login");
 
-    //1)Sign In Scenario
+  await username.fill("navindumalith0@gmail.com");
+  await password.fill("Mn20010810@#");
+  await logIn.click();
 
-    const username = page.locator('#userEmail');
-    const password = page.locator("[type='password']");  
-    const logIn = page.locator("#login");
+  await page.waitForLoadState("networkidle");
 
-    await username.fill("navindumalith0@gmail.com");
-    await password.fill("Mn20010810@#");
-    await logIn.click();
+  const products = page.locator(".card-body");
+  const count = await products.count();
+  console.log(count);
 
+  const titles = await products.locator("b").allTextContents();
+  console.log(titles);
 
-    //2)Use an Iteration and found the exact product that match and click add to cart Button
+  const ExpProduct = "ADIDAS ORIGINAL";
 
-    const productCart = page.locator(".card-body");
-    const productName = "ADIDAS ORIGINAL";
-
-    //wait for one elemen appear in the dom for the selector match in the page 
-    await page.waitForSelector(".card-body");
-
-    const count=await productCart.count();
-    await console.log(count);
-    
-    for(let i=0;i<count;i++){
-        if(await productCart.nth(i).locator("b").textContent() === productName){
-            await productCart.nth(i).locator("text= Add To Cart").click();
-            break;
-
-        }
-
+  for (let i = 0; i < count; i++) {
+    if (titles[i] === ExpProduct) {
+      console.log("Product Found");
+      await products.nth(i).locator("text= Add To Cart").click();
+      break;
     }
+  }
 
-    //assertion in add to cart page
+  //click  on cart Icon top of the page
 
-    await page.locator("[routerlink*='cart']").click();
-    await page.waitForSelector("h3:has-text('ADIDAS ORIGINAL')");
-    const bool = await page.locator("h3:has-text('ADIDAS ORIGINAL')").isVisible();
-    console.log(bool);
-    await expect(bool).toBeTruthy();
+  await page.locator("[routerlink*='cart']").click();
 
+  //new one
+  await page.locator("div li").nth(1).waitFor();
 
-    //checkout page
+  await page.waitForSelector("h3:has-text('ADIDAS ORIGINAL')");
+  const bool = await page.locator("h3:has-text('ADIDAS ORIGINAL')").isVisible();
+  console.log(bool);
+  expect(bool).toBeTruthy();
 
-    await page.locator("text=checkout").click();
+  await page.locator('text="Checkout"').click();
 
-    //wait for 4 seconds
-    await page.waitForTimeout(4000);
+  await page.waitForTimeout(5000);
 
-    const cardNumber="1212121212121212";
-    const expDate="05";
-    const expMonth="15";
-    const cvv="166";
-    const coupon="test";
-    const bankName="HDFC";
+  //inputing card details
 
-    await page.locator('input.txt').nth(0).fill(cardNumber);
-    await page.locator('input.txt').nth(1).fill(cvv);
-    await page.locator('input.txt').nth(2).fill(bankName);
-    await page.locator("[name='coupon']").fill(coupon);
+  const creditCardNumber = "4242 4242 4242 4242";
+  const cvv = "123";
+  const cardName = "sampath";
+  const coupenCode = "rahulshettyacademy";
+  const expDate = "31";
+  const expMonth = "11";
 
-    const dropdown = await page.locator(".ddl");
-    await dropdown.nth(0).selectOption(expDate);   
-    await dropdown.nth(1).selectOption(expMonth);
+  await page.locator(".field input").nth(0).fill(creditCardNumber);
+  await page.locator(".field input").nth(1).fill(cvv);
+  await page.locator(".field input").nth(2).fill(cardName);
+  await page.locator(".field input").nth(3).fill(coupenCode);
 
-    const type="ind";
-    await page.locator("[placeholder*='Select Country']").pressSequentially(type);
+  //hadnling dropdwon
 
-    //Iteration to select country
+  await page.locator(".field select").nth(0).selectOption(expMonth);
+  await page.locator(".field select").nth(1).selectOption(expDate);
 
-    const dropdownCounry=await page.locator(".ta-results");
-    await page.waitForSelector(".ta-results");
+  //dropdown country slection
 
-    const countCounry=await dropdownCounry.locator("button").count();
-    console.log(countCounry);
+  const dropdownInput = await page.locator("[placeholder*='Select Country']");
+  await dropdownInput.waitFor();
+  await dropdownInput.pressSequentially("ind");
 
-    const country=" India";
-    for(let i=0;i<countCounry;i++){
-        if(country===await dropdownCounry.locator("button").nth(i).textContent()){
-            await dropdownCounry.locator("button").nth(i).click();
-            break;
-        }
+  const dropdown = await page.locator(".form-group section");
+  await dropdown.waitFor();
+
+  const countries = await dropdown.locator("Button").count();
+  console.log(countries);
+
+  for(let i=0;i<countries;i++){
+    const countryName = " India";
+    if(countryName === await dropdown.locator("Button").nth(i).textContent()){
+      await dropdown.locator("Button").nth(i).click();
+      console.log(dropdown.locator("Button").nth(i).textContent());
+      break;
     }
+  }
 
-
-    await page.pause();
-
-    
-
-})
+//   await page.pause();
+});
