@@ -80,14 +80,46 @@ test.only("Assignment 2 Login", async ({ browser }) => {
   const countries = await dropdown.locator("Button").count();
   console.log(countries);
 
-  for(let i=0;i<countries;i++){
+  for (let i = 0; i < countries; i++) {
     const countryName = " India";
-    if(countryName === await dropdown.locator("Button").nth(i).textContent()){
+    if (
+      countryName === (await dropdown.locator("Button").nth(i).textContent())
+    ) {
       await dropdown.locator("Button").nth(i).click();
-      console.log(dropdown.locator("Button").nth(i).textContent());
       break;
     }
   }
 
-//   await page.pause();
+  await expect(page.locator(".user__name [type='text']").nth(0)).toHaveText(
+    "navindumalith0@gmail.com"
+  );
+  await page.locator(".action__submit").click();
+  await expect(page.locator(".hero-primary")).toHaveText(
+    " Thankyou for the order. "
+  );
+
+  const orderId = await page
+    .locator(".em-spacer-1 .ng-star-inserted")
+    .textContent();
+  console.log(orderId);
+
+  //Naviagte to orders and Dynamically Search the order ID
+
+  await page.locator("li [routerlink*='/dashboard/myorders']").click();
+
+  await page.waitForSelector("tbody tr");
+  // keep rows as a locator
+  const rows = page.locator("tbody tr");
+  const rowCount = await rows.count();
+  console.log(rowCount);
+
+  for (let i = 0; i < rowCount; i++) {
+    const rowOrderId = await rows.nth(i).locator("th").textContent();
+    if (orderId.includes(rowOrderId)) {
+      await rows.nth(i).locator("button").first().click();
+      break;
+    }
+  }
+
+  await page.waitForTimeout(5000);
 });
