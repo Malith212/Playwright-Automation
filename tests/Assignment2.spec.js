@@ -1,7 +1,7 @@
 const { test, expect } = require("@playwright/test");
 const path = require("path");
 
-test.only("Assignment 2 Login", async ({ browser }) => {
+test("Assignment 2 Login", async ({ browser }) => {
   const contet = await browser.newContext();
   const page = await contet.newPage();
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
