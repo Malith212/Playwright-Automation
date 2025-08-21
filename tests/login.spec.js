@@ -127,7 +127,7 @@ test('UI basics/Select Drop Down', async ({page})=>{
 
 //opening a new tab window and printing a text on that page
 
-test.only('opeining a new tab', async ({browser})=>{
+test('opeining a new tab', async ({browser})=>{
     const context=await browser.newContext();
     const page=await context.newPage();
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');

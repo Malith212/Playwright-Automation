@@ -7,7 +7,7 @@ const { defineConfig, devices } = require('@playwright/test');
 
 const config = defineConfig({
   testDir: './tests',
-  timeout: 40 * 1000,
+  timeout: 4 * 1000,
   expect: {
     timeout: 4000,
   },
@@ -15,6 +15,8 @@ const config = defineConfig({
   use: {
     browserName: 'chromium',
     headless: false,
+    // trace: 'on',
+    // screenshot: 'on'
   },
 });
 
