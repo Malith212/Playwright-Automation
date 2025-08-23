@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test.only("Assignment4_Calander", async ({page})=>{
+test("Assignment4_Calander", async ({page})=>{
 
     await page.goto('https://rahulshettyacademy.com/seleniumPractise/#/offers');
 
