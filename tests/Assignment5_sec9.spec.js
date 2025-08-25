@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test.only("Assignment5_sec9", async ({page})=>{
+test("Assignment5_sec9", async ({page})=>{
 
     await page.goto('https://rahulshettyacademy.com/AutomationPractice/');
 
