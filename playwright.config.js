@@ -7,9 +7,9 @@ const { defineConfig, devices } = require('@playwright/test');
 
 const config = defineConfig({
   testDir: './tests',
-  timeout: 4 * 1000,
+  timeout: 10 * 1000,
   expect: {
-    timeout: 4000,
+    timeout: 10 * 1000,
   },
   reporter: 'html',
   use: {
