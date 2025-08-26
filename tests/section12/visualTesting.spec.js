@@ -15,7 +15,7 @@ test('Visual Testing', async ({ page }) => {
     
 });
 
-test.only('Visual Testing2', async ({ page }) => {
+test('Visual Testing2', async ({ page }) => {
 
     //naviagate to google
     await page.goto('https://google.com');
