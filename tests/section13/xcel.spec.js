@@ -25,9 +25,6 @@ async function readXl(worksheet, searchText) {
   worksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
       if (cell.value === searchText) {
-        console.log(rowNumber);
-        console.log(colNumber);
-
         output.row = rowNumber;
         output.col = colNumber;
       }
@@ -35,8 +32,6 @@ async function readXl(worksheet, searchText) {
   });
   return output;
 }
-
-// main("Navindu", "/Users/navindu/downloads/Book1.xlsx", "malith",35,{rowChange:0,colChange:2});
 
 test.only("Download Update Excel", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/upload-download-test/index.html");
@@ -61,7 +56,11 @@ test.only("Download Update Excel", async ({ page }) => {
   // Upload back if needed
   await page.locator("#fileinput").setInputFiles(filePath);
 
+  // ✅ Find the row that contains "malith"
+  const desiredRow = page.getByRole('row').filter({ hasText: 'malith' });
+
+  // ✅ Check if that row also contains the updated price "35"
+  await expect(desiredRow).toContainText("35");
+
   await page.pause();
-
-
 });
