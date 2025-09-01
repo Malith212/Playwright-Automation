@@ -24,8 +24,7 @@ class Dashboard {
 
   async goToCheckout() {
     await this.checkout.click();
-    //add 3 seconds delay
-    await this.page.waitForTimeout(3000);
+    await this.page.waitForLoadState("networkidle");
   }
 }
 
