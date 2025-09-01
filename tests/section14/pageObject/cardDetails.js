@@ -18,8 +18,6 @@ class CardDetails {
     await this.expMonth.selectOption(expMonth);
     await this.expDate.selectOption(expDate);
 
-    await this.page.pause();
-
   }
 
 

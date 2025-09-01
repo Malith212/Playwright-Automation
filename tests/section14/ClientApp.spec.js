@@ -3,6 +3,7 @@ const { LoginPage } = require("./pageObject/loginPage");
 const { Dashboard } = require("./pageObject/dashBoard");
 const { Checkout } = require("./pageObject/checkout");
 const { CardDetails } = require("./pageObject/cardDetails");
+const { ShippingInformation } = require("./pageObject/shippingInfromation");
 
 test.only("Assignment 1 Login", async ({ page }) => {
   const email = "navindumalith0@gmail.com";
@@ -40,4 +41,8 @@ test.only("Assignment 1 Login", async ({ page }) => {
     expMonth,
     expDate
   );
+
+  //fill Shipping Information
+  const shippingInformation = new ShippingInformation(page);
+  await shippingInformation.fillShippingInformation(" India");
 });
