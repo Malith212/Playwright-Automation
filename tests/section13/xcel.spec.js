@@ -33,7 +33,7 @@ async function readXl(worksheet, searchText) {
   return output;
 }
 
-test.only("Download Update Excel", async ({ page }) => {
+test("Download Update Excel", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/upload-download-test/index.html");
 
   // Start waiting for the download before clicking
