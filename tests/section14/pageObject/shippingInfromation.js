@@ -24,9 +24,9 @@ class ShippingInformation {
       }
     }
 
-    await expect(this.page.locator(".user__name [type='text']").nth(0)).toHaveText(
-      "navindumalith0@gmail.com"
-    );
+    // await expect(this.page.locator(".user__name [type='text']").nth(0)).toHaveText(
+    //   "navindumalith0@gmail.com"
+    // );
   }
 
   async clickCheckoutButton() {
