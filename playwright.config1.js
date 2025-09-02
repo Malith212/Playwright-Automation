@@ -27,6 +27,10 @@ const config = defineConfig({
       use: {
         browserName: 'chromium',
         headless: false,
+        // permissions: ['geoLocation'],
+        // ...devices['Galaxy A55'],
+        // ignoreHTTPSErrors: true,
+        // viewport: { width: 375, height: 667 },
         // trace: 'on',
         // screenshot: 'on'
       }
