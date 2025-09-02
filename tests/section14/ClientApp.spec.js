@@ -1,10 +1,8 @@
 const { test, expect } = require("@playwright/test");
 const { POManger } = require("./pageObject/poManger");
 
-
 test.only("Assignment 1 Login", async ({ page }) => {
-
-    const poManger = new POManger(page);
+  const poManger = new POManger(page);
 
   const email = "navindumalith0@gmail.com";
   const password = "Mn20010810@#";
@@ -47,7 +45,7 @@ test.only("Assignment 1 Login", async ({ page }) => {
   await shippingInformation.fillShippingInformation(" India");
   await shippingInformation.clickCheckoutButton();
 
-  //getOrderId
+  //getOrderId and search dymancally whther it is in Orders Page
   const orderId = poManger.getOrderId();
-  console.log(orderId);
+  await orderId.getOrderId();
 });
