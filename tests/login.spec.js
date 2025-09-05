@@ -77,7 +77,7 @@ test('Assignment 1 Login', async ({browser})=>{
     console.log(await cardTitle.last().textContent());
 }) 
 
-test('UI basics/Select Drop Down', async ({page})=>{
+test.only('UI basics/Select Drop Down', async ({page})=>{
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');   
 
     const userName = await page.locator('#username');

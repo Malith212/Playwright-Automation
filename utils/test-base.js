@@ -1,0 +1,15 @@
+const base = require("@playwright/test");
+
+exports.customTest = base.test.extend({
+    testDataForOrder:{
+        email:"navindumalith0@gmail.com",
+        password:"Mn20010810@#",
+        ExpProduct:"ADIDAS ORIGINAL",
+        creditCardNumber:"4242 4242 4242 4242",
+        cvv:"123",
+        cardName:"Navindu Malith",
+        couponCode:"rahulshettyacademy",
+        expDate:"11",
+        expMonth:"12"
+    }
+});
