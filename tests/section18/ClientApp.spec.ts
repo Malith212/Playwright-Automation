@@ -1,9 +1,9 @@
-const { test, expect } = require("@playwright/test");
-const { POManger } = require("./pageObject/poManger");
+import { test, expect } from "@playwright/test";
+import { POManger } from "./pageObject/poManger";
+import { customTest } from "./utils.ts/test-base";  
 //Json-->string-->object
-const dataSet = require("../../utils/placeorder.json");
+const dataSet: any = require("./utils.ts/placeorder.json");
 
-const {customTest} = require("../../utils/test-base");
 
 for (const data of dataSet) {
   test.only(`Place Order ${data.email}`, async ({ page }) => {
@@ -55,7 +55,6 @@ for (const data of dataSet) {
     await orderId.getOrderId();
   });
 
-  // customTest(`Place Order ${data.email}`, async ({ page, testDataForOrder }) => {
   //   const poManger = new POManger(page);
 
   //   //   const email = "navindumalith0@gmail.com";
