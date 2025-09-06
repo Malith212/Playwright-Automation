@@ -1,6 +1,10 @@
+import { test, expect, Page, Locator } from "@playwright/test";
 export class LoginPage {
-
-    constructor(page){
+    page: Page;
+    username: Locator;
+    password: Locator;
+    logIn: Locator;
+    constructor(page:Page){
         this.page = page;
         this.username = page.locator('#userEmail');
         this.password = page.locator("[type='password']");
@@ -11,7 +15,7 @@ export class LoginPage {
         await this.page.goto('https://rahulshettyacademy.com/client/#/auth/login');
     }
 
-    async login(username, password){
+    async login(username:string, password:string){
         await this.username.fill(username);
         await this.password.fill(password);
         await this.logIn.click();

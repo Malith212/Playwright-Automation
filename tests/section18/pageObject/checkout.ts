@@ -1,7 +1,9 @@
-// const { expect } = require('@playwright/test');
-
+import { test, expect, Page, Locator } from '@playwright/test';
 export class Checkout{
-    constructor(page){
+  product: Locator;
+  chekOutButton: Locator;
+  page: Page;
+    constructor(page:Page){
         this.page = page;
         this.product = page.locator("div li").nth(1);
         this.chekOutButton = page.getByRole("button", {name:"Checkout"});

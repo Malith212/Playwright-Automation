@@ -1,5 +1,13 @@
+import { test, expect, Page, Locator } from "@playwright/test";
 export class CardDetails {
-  constructor(page) {
+  page: Page;
+  cardNumer: Locator;
+  cvv: Locator;
+  cardName: Locator;
+  couponCode: Locator;
+  expMonth: Locator;
+  expDate: Locator;
+  constructor(page: Page) {
     this.page = page;
     this.cardNumer = page.locator(".field input").nth(0);
     this.cvv = page.locator(".field input").nth(1);
@@ -10,7 +18,7 @@ export class CardDetails {
     this.expDate = page.locator(".field select").nth(1);
   }
 
-  async fillCardDetails(creditCardNumber,cvv,cardName,coupenCode,expMonth,expDate){
+  async fillCardDetails(creditCardNumber:string,cvv:string,cardName:string,coupenCode:string,expMonth:string,expDate:string){
     await this.cardNumer.fill(creditCardNumber);
     await this.cvv.fill(cvv);
     await this.cardName.fill(cardName);

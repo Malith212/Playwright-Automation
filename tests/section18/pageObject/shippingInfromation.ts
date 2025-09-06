@@ -1,7 +1,12 @@
-const { expect } = require('@playwright/test');
+import { test, expect, Page, Locator } from "@playwright/test";
 
 export class ShippingInformation {
-  constructor(page) {
+  page: Page;
+  dropdownInput: Locator;
+  dropdown: Locator;
+  countries: Locator;
+  checkout: Locator;
+  constructor(page: Page) {
     this.page = page;
     this.dropdownInput = page.locator("[placeholder*='Select Country']");
     this.dropdown = page.locator(".form-group section");
@@ -9,7 +14,7 @@ export class ShippingInformation {
     this.checkout = page.locator(".action__submit");
   }
 
-  async fillShippingInformation(country) {
+  async fillShippingInformation(country: string) {
     await this.dropdownInput.waitFor();
     await this.dropdownInput.pressSequentially("ind");
 
@@ -17,16 +22,15 @@ export class ShippingInformation {
     const count = await this.countries.count();
 
     for (let i = 0; i < count; i++) {
-      const buttonText = await this.countries.nth(i).textContent();
+      let buttonText: any;
+      buttonText = await this.countries.nth(i).textContent();
       if (buttonText.trim() === country.trim()) {
         await this.countries.nth(i).click();
         break;
       }
     }
 
-    // await expect(this.page.locator(".user__name [type='text']").nth(0)).toHaveText(
-    //   "navindumalith0@gmail.com"
-    // );
+
   }
 
   async clickCheckoutButton() {

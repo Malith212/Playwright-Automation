@@ -1,5 +1,10 @@
+import { test, expect, Page, Locator } from "@playwright/test";
 export class OrderId {
-  constructor(page) {
+  page: Page;
+  orderId: Locator;
+  orderPage: Locator;
+  tableRow: Locator;
+  constructor(page: Page) {
     this.page = page;
     this.orderId = this.page.locator(".em-spacer-1 .ng-star-inserted");
     this.orderPage = this.page.locator("li [routerlink*='/dashboard/myorders']");
