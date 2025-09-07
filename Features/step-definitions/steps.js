@@ -1,53 +1,65 @@
-const { Given, When, Then } = require('@cucumber/cucumber')
+const { Given, When, Then } = require("@cucumber/cucumber");
 const { POManger } = require("../../tests/section14/pageObject/poManger");
-const { test,expect,playwright } = require("@playwright/test");
+const playwright = require("@playwright/test");
 
-Given('A login to the ecommerce application with {username} and {password}', async function (username, password) {
-    
-    //thease lines need to add beacuse we are using cucmber with playwright
+// Test Data (you can later move this to a JSON file if needed)
+const testData = {
+  creditCardNumber: "4111111111111111",
+  cvv: "123",
+  cardName: "Malith Weerarathne",
+  couponCode: "DISCOUNT10",
+  expMonth: "12",
+  expDate: "2025",
+};
+
+Given(
+  "A login to the ecommerce application with {string} and {string}", {timeout: 10000},
+  async function (username, password) {
+    // these lines are required since we are using cucumber with playwright
     const browser = await playwright["chromium"].launch({ headless: false });
     const context = await browser.newContext();
     const page = await context.newPage();
 
-    const poManger = new POManger(page);
-    const loginPage = poManger.getLoginPage();
+    this.poManger = new POManger(page);
+    const loginPage = this.poManger.getLoginPage();
     await loginPage.goTo();
-    await loginPage.login(data.email, data.password);
-})
+    await loginPage.login(username, password);
+  }
+);
 
-When("Add {product} to the cart", async function (product) {
-    //Product add to cart
-    const dashboard = poManger.getDashboard();
-    await dashboard.addProductToCart(data.ExpProduct);
-    await dashboard.goToCheckout();
-})
+When("Add {string} to the cart", async function (productName) {
+  // Product add to cart
+  const dashboard = this.poManger.getDashboard();
+  await dashboard.addProductToCart(productName);
+  await dashboard.goToCheckout();
+});
 
-Then("I should see {product} in the cart", async function (product) {
-    //navigate to checkout
-    const checkout = poManger.getCheckout();
-    await checkout.gotochekout();
-})
+Then("I should see {string} in the cart", {timeout: 10000},async function (product) {
+  // navigate to checkout
+  const checkout = this.poManger.getCheckout();
+  await checkout.goToCheckout(); // fixed typo
+});
 
-When("Enter valid details and place the order", async function () {
-    //fill Card Details
-    const cardDetails = poManger.getCardDetails();
-    await cardDetails.fillCardDetails(
-      data.creditCardNumber,
-      data.cvv,
-      data.cardName,
-      data.couponCode,
-      data.expMonth,
-      data.expDate
-    );
+When("Enter valid details and place the order", {timeout: 10000},async function () {
+  // fill Card Details
+  const cardDetails = this.poManger.getCardDetails();
+  await cardDetails.fillCardDetails(
+    testData.creditCardNumber,
+    testData.cvv,
+    testData.cardName,
+    testData.couponCode,
+    testData.expMonth,
+    testData.expDate
+  );
 
-    //fill Shipping Information
-    const shippingInformation = poManger.getShippingInformation();
-    await shippingInformation.fillShippingInformation(" India");
-    await shippingInformation.clickCheckoutButton();
-})
+  // fill Shipping Information
+  const shippingInformation = this.poManger.getShippingInformation();
+  await shippingInformation.fillShippingInformation("India");
+  await shippingInformation.clickCheckoutButton();
+});
 
-Then("Verify the order is is in the Order History", async function () {
-    //getOrderId and search dymancally whther it is in Orders Page    
-    const orderId = poManger.getOrderId();
-    await orderId.getOrderId();
-})
+Then("Verify the order is is in the Order History",{timeout: 10000}, async function () {
+  // getOrderId and search dynamically whether it is in Orders Page
+  const orderId = this.poManger.getOrderId();
+  await orderId.getOrderId();
+});

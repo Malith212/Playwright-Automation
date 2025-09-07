@@ -1,8 +1,8 @@
 Feature: Ecommerce Validations
 
   Scenario: Placing the order
-    Given a login to the ecommerce application with "username" and "password"
+    Given A login to the ecommerce application with "navindumalith0@gmail.com" and "Mn20010810@#"
     When Add "ADIDAS ORIGINAL" to the cart
-    Then Verify "ADIDAS ORIGINAL" is displayed in the cart 
+    Then I should see "ADIDAS ORIGINAL" in the cart
     When Enter valid details and place the order
-    Then Verify the order is is in the Order History 
+    Then Verify the order is is in the Order History
